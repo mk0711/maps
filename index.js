@@ -27,9 +27,9 @@ d3.json('nygeo.json').then(function(data) {
 
 
         const albersProj = d3.geoAlbers()
-            .scale(190000)
-            .rotate([71.057, 0])
-            .center([0, 42.313])
+            .scale(90000)
+            .rotate([74, 0]) // longitude 
+            .center([0, 40.7]) //latitude 
             .translate([m.width/2, m.height/2]);
 
         // this code shows what albersProj really does
@@ -38,27 +38,14 @@ d3.json('nygeo.json').then(function(data) {
         // let scaled = albersProj(arr)
         // console.log(scaled)
 
-        const geoPath = d3.geoPath()
-        .projection(albersProj)
-        console.log(data.features)
+        const geoPath = d3.geoPath().projection(albersProj) //handles geo json 
+
         g.selectAll('path')
         .data(data.features)
         .enter()
         .append('path')
             .attr('fill', '#ccc')
             .attr('d', geoPath)
-
-
-        const allPaths = [];
-        const df = data.features;
-        console.log(data.features[1])
-
-            for (let i = 0; i < data.features.length - 1; i++) {
-                const r = albersProj(data.features[i].geometry.coordinates);
-                const n = albersProj(data.features[i+1].geometry.coordinates);
-                allPaths.push([r, n]);
-            }
-        console.log(allPaths)
 
         // plots circles on the boston map
         g.selectAll('.circle')
@@ -82,8 +69,8 @@ d3.json('nygeo.json').then(function(data) {
                 .attr("opacity",1)
                 .transition()
                 .duration( 1000 )
-                .attr( "cx", width * Math.round( Math.random() ) )
-                .attr( "cy", height * Math.round( Math.random() ) )
+                .attr( "cx", m.width * Math.round( Math.random() ) )
+                .attr( "cy", m.height * Math.round( Math.random() ) )
                 .attr( "opacity", 0 )
                 .on("end",function(){
                   d3.select(this).remove();
