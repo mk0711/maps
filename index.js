@@ -1,14 +1,5 @@
 
-/**
- * This example shows how to plot points on a map
- * and how to work with normal geographical data that
- * is not in GeoJSON form
- * 
- * Outline:
- * 1. show how to load multiple files of data 
- * 2. talk about how geoAlbers() is a scaling function
- * 3. show how to plot points with geoAlbers
- */
+
 const m = {
     width: 800,
     height: 600
@@ -31,12 +22,6 @@ d3.json('nygeo.json').then(function(data) {
             .rotate([74, 0]) // longitude 
             .center([0, 40.7]) //latitude 
             .translate([m.width/2, m.height/2]);
-
-        // this code shows what albersProj really does
-        // let point = pointData[0]
-        // let arr = [ point['long'] , point['lat'] ]
-        // let scaled = albersProj(arr)
-        // console.log(scaled)
 
         const geoPath = d3.geoPath().projection(albersProj) //handles geo json 
 
@@ -76,7 +61,6 @@ d3.json('nygeo.json').then(function(data) {
                   d3.select(this).remove();
                 })
            })
-        
     })
   
 })
